@@ -3,16 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pole Barn Customizer</title>
+  <title>Building Customizer</title>
   <style>
-    /* Global Canvas Layout */
+    /* Structural Canvas */
     body {
       background-color: #141517;
-      background-image: 
-        radial-gradient(at 50% 0%, rgba(38, 42, 49, 0.4) 0px, transparent 75%),
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 100% 100%, 24px 24px, 24px 24px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       color: #f5f5f7;
       display: flex;
@@ -22,6 +17,268 @@
       min-height: 100vh;
       margin: 0;
       padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* Core Container Layout */
+    .visualizer-container {
+      background: #202226;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 460px;
+      border: 1px solid #111214;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+    }
+
+    /* Panel Header Design */
+    .visualizer-header {
+      padding: 24px 24px 16px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 159, 67, 0.15);
+      color: #ff9f43;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .subtitle {
+      margin: 4px 0 0 0;
+      font-size: 0.85rem;
+      color: #8a909c;
+    }
+
+    /* Main Live Display Box */
+    .render-preview-window {
+      margin: 20px 24px 0 24px;
+      height: 160px;
+      background: #17181c;
+      border-radius: 12px;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .steel-panel-preview {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .preview-overlay-text {
+      width: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 10px 0;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Selection Grid Platform */
+    .control-panel {
+      padding: 24px;
+    }
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      color: #8a909c;
+      text-transform: uppercase;
+    }
+
+    .visualizer-options-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    /* --- THE 3D SELECTION CARD MECHANICS --- */
+    .color-option-card {
+      position: relative;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #0d0e10; /* Physical base underplate depth color */
+      border: none;
+      padding: 0;
+      width: 100%;
+      
+      /* Distinct physical layer extrusion using step-shadow stacks */
+      box-shadow: 
+        0 1px 0px #0d0e10,
+        0 2px 0px #0d0e10,
+        0 3px 0px #0d0e10,
+        0 4px 0px #0d0e10,
+        0 5px 0px #0d0e10,
+        0 6px 12px rgba(0, 0, 0, 0.5); 
+        
+      transform: translateY(-5px); /* Lifted offset */
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    /* Top interactive surface layer face */
+    .color-option-card .surface {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      height: 90px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+      box-sizing: border-box;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Setup Fallback Matte Textures if source paths are missing */
+    .color-option-card .surface.fall-coffee { background-color: #463025; }
+    .color-option-card .surface.fall-espresso { background-color: #2d2b2a; }
+    .color-option-card .surface.fall-charcoal { background-color: #3a3d40; }
+
+    /* Interaction State Behaviors */
+    .color-option-card:hover {
+      transform: translateY(-6px);
+    }
+
+    /* When clicked or set as active selection, flatten card flat to grid */
+    .color-option-card:active,
+    .color-option-card.selected {
+      transform: translateY(0px);
+      box-shadow: 
+        0 1px 0px #0d0e10,
+        0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    /* High-contrast active framing loop border */
+    .color-option-card.selected .surface {
+      border-color: #ff9f43; 
+      box-shadow: inset 0 0 0 2px rgba(255, 159, 67, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="visualizer-container">
+    
+    <div class="visualizer-header">
+      <span class="badge">Builder Canvas</span>
+      <h1>Configure Exterior</h1>
+      <p class="subtitle">Select layout textures to refresh building shell.</p>
+    </div>
+
+    <!-- Live Display Window Box -->
+    <div class="render-preview-window">
+      <div id="materialPreview" class="steel-panel-preview">
+        <div class="preview-overlay-text">3D CONFIGURATION RENDER</div>
+      </div>
+    </div>
+
+    <!-- Active Swatches Control Area -->
+    <div class="control-panel">
+      <h3>Siding Swatches</h3>
+      
+      <div class="visualizer-options-grid">
+        
+        <!-- Coffee Block Option -->
+        <!-- Swap out the sample URLs below with your local image paths like: data-img="images/coffee.jpg" -->
+        <button class="color-option-card selected" 
+                data-img="https://placehold.co/400x300/463025/ffffff?text=Coffee+Siding" 
+                data-fallback="#463025"
+                onclick="updateVisualizer(this)">
+          <span class="surface fall-coffee" style="background-image: url('https://placehold.co/150x150/463025/ffffff?text=Coffee')">
+            Coffee
+          </span>
+        </button>
+
+        <!-- Espresso Block Option -->
+        <button class="color-option-card" 
+                data-img="https://placehold.co/400x300/2d2b2a/ffffff?text=Espresso+Siding" 
+                data-fallback="#2d2b2a"
+                onclick="updateVisualizer(this)">
+          <span class="surface fall-espresso" style="background-image: url('https://placehold.co/150x150/2d2b2a/ffffff?text=Espresso')">
+            Espresso
+          </span>
+        </button>
+
+        <!-- Charcoal Block Option -->
+        <button class="color-option-card" 
+                data-img="https://placehold.co/400x300/3a3d40/ffffff?text=Charcoal+Siding" 
+                data-fallback="#3a3d40"
+                onclick="updateVisualizer(this)">
+          <span class="surface fall-charcoal" style="background-image: url('https://placehold.co/150x150/3a3d40/ffffff?text=Charcoal')">
+            Charcoal
+          </span>
+        </button>
+
+      </div>
+    </div>
+    
+  </div>
+
+  <script>
+    function updateVisualizer(element) {
+      // 1. Structural CSS Grid Select Management
+      const grid = element.parentElement;
+      const cards = grid.getElementsByClassName('color-option-card');
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].classList.remove('selected');
+      }
+      element.classList.add('selected');
+      
+      // 2. Safely Extract Data Assets From Attributes
+      const newImg = element.getAttribute('data-img');
+      const fallbackHex = element.getAttribute('data-fallback');
+      
+      // 3. Render Output To Monitor Frame
+      const previewWindow = document.getElementById('materialPreview');
+      if (previewWindow) {
+        previewWindow.style.backgroundImage = "url('" + newImg + "')";
+        previewWindow.style.backgroundColor = fallbackHex;
+      }
+    }
+
+    // Initialize Default State Configuration Seamlessly
+    window.onload = function() {
+      const defaultActive = document.querySelector('.color-option-card.selected');
+      if (defaultActive) {
+        updateVisualizer(defaultActive);
+      }
+    };
+  </script>
+
+</body>
+</html>
+padding: 20px;
       box-sizing: border-box;
     }
 
