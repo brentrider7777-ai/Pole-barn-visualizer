@@ -3,22 +3,530 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ironclad Barns Pro Configurator</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Apex Construction Group | Custom Pole Barns & Gazebos</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #0b0f19; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #334155; }
+        :root {
+            --primary: #0f172a;
+            --accent: #c2410c;
+            --accent-hover: #9a3412;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --radius: 8px;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Top Contractor Bar */
+        .contractor-bar {
+            background-color: #1e293b;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #334155;
+        }
+
+        /* Navigation */
+        header {
+            background-color: var(--primary);
+            color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #f97316;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: var(--radius);
+        }
+
+        .tab-btn:hover {
+            color: var(--white);
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .tab-btn.active {
+            color: var(--white);
+            background-color: var(--accent);
+        }
+
+        /* Layout Container */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            min-height: 75vh;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tab 1: Service Overview & Home */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: center;
+            padding: 2.5rem 0;
+        }
+
+        .hero-text h1 {
+            font-size: 2.75rem;
+            color: var(--primary);
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary { background-color: var(--accent); color: var(--white); border: none; }
+        .btn-primary:hover { background-color: var(--accent-hover); }
+        .btn-secondary { background-color: transparent; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-secondary:hover { background-color: var(--primary); color: var(--white); }
+
+        .badge-grid {
+            background: #f1f5f9;
+            padding: 2rem;
+            border-radius: var(--radius);
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .badge-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .badge-item i {
+            color: var(--accent);
+            font-size: 1.25rem;
+            margin-top: 0.2rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            color: var(--primary);
+            margin: 3rem 0 1.5rem 0;
+            text-align: center;
+        }
+
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .process-step {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .step-num {
+            position: absolute;
+            top: -15px;
+            right: 15px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #e2e8f0;
+            line-height: 1;
+        }
+
+        /* Tab 2: Service Configurator */
+        .config-container {
+            display: grid;
+            grid-template-columns: 440px 1fr;
+            gap: 2rem;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .config-panel {
+            padding: 2rem;
+            border-right: 1px solid var(--border);
+            max-height: 780px;
+            overflow-y: auto;
+        }
+
+        .config-preview-panel {
+            background: #f1f5f9;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .config-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .config-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .select-input, .text-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background-color: var(--bg-light);
+            font-size: 1rem;
+        }
+
+        .swatch-grid {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .swatch {
+            width: 34px;
+            height: 34px;
+            border-radius: 4px;
+            border: 2px solid var(--white);
+            outline: 1px solid var(--border);
+            cursor: pointer;
+        }
+
+        .swatch.selected { outline: 2px solid var(--accent); }
+
+        .checkbox-tile-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .checkbox-tile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            background-color: var(--bg-light);
+        }
+
+        .preview-canvas-wrapper {
+            background: var(--white);
+            width: 100%;
+            height: 420px;
+            border-radius: var(--radius);
+            box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .price-display {
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #f97316;
+        }
+
+        /* Tab 3: Gallery Matrix */
+        .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+        .filter-btn {
+            background: var(--white); border: 1px solid var(--border);
+            padding: 0.5rem 1.25rem; border-radius: 20px; cursor: pointer;
+            font-weight: 600; transition: all 0.2s ease;
+        }
+        .filter-btn.active, .filter-btn:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
+        
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        .gallery-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+        .gallery-img-placeholder { height: 210px; background-color: #cbd5e1; display: flex; align-items: center; justify-content: center; color: var(--text-light); font-size: 3rem; }
+        .gallery-info { padding: 1.5rem; }
+        .gallery-info h3 { margin-bottom: 0.25rem; color: var(--primary); }
+
+        /* Tab 4: Consultation Form */
+        .quote-layout { max-width: 650px; margin: 0 auto; background: var(--white); padding: 3rem; border-radius: var(--radius); box-shadow: var(--shadow); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        @media (max-width: 968px) {
+            .hero { grid-template-columns: 1fr; gap: 2rem; }
+            .config-container { grid-template-columns: 1fr; }
+            .process-flow { grid-template-columns: 1fr 1fr; }
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-slate-800 selection:text-white">
+<body>
 
-    <!-- Premium Editorial Top Banner (Replaced Corny Countdown) -->
-    <div class="bg-slate-900 border-b border-slate-800 text-center py-2.5 px-4 text-[11px] font-medium tracking-wider text-slate-400 flex items-center justify-center gap-2">
+    <div class="contractor-bar">
+        <div><i class="fa-solid fa-file-signature"></i> Licensed General Contractor & Insured Builder</div>
+        <div><i class="fa-solid fa-phone"></i> Call Crew Desk: (555) 839-2041</div>
+    </div>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-compass-drafting"></i> APEX <span>CONSTRUCTION</span>
+            </div>
+            <nav>
+                <button class="tab-btn active" onclick="switchTab('home')">Our Standards</button>
+                <button class="tab-btn" onclick="switchTab('configurator')">Estimate Estimate</button>
+                <button class="tab-btn" onclick="switchTab('gallery')">Recent Builds</button>
+                <button class="tab-btn" onclick="switchTab('quote')">Consultation</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- TAB 1: SERVICE STANDARDS -->
+        <section id="home" class="tab-content active">
+            <div class="hero">
+                <div class="hero-text">
+                    <h1>We Turn Structural Blueprints Into Asset Realities</h1>
+                    <p>Apex Construction specializes in turn-key post-frame buildings and timber framing services. From site grading and engineering verification to final exterior framing trim, we execute the full building lifecycle.</p>
+                    <div class="cta-group">
+                        <button class="btn btn-primary" onclick="switchTab('configurator')"><i class="fa-solid fa-calculator"></i> Run Dynamic Estimator</button>
+                        <button class="btn btn-secondary" onclick="switchTab('quote')">Book Site Assessment</button>
+                    </div>
+                </div>
+                <div class="badge-grid">
+                    <div class="badge-item">
+                        <i class="fa-solid fa-certificate"></i>
+                        <div>
+                            <strong>Master Carpentry Crews</strong>
+                            <p style="font-size: 0.9rem; color: var(--text-light)">No sub-contracted framing squads. Every structural framing layout is built by direct crew employees.</p>
+                        </div>
+                    </div>
+                    <div class="badge-item">
+                        <i class="fa-solid fa-gavel"></i>
+                        <div>
+                            <strong>Zoning & Permit Assistance</strong>
+                            <p style="font-size: 0.9rem; color: var(--text-light)">We process structural plan submissions, wind-load data sheets, and local building inspector requests.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Our Rigorous Build Workflow</h2>
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="step-num">01</div>
+                    <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Site Prep & Leveling</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Excavation teams clear brush, level terrain, and grade slope configurations for concrete pad allocations.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">02</div>
+                    <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Post Foundations</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Setting structural 3-ply laminated columns past the regional frost line with mixed base collars.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">03</div>
+                    <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Truss Truss Truss</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Lifting custom engineered, high wind-load roof systems safely anchored using direct heavy brackets.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">04</div>
+                    <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Trim & Envelope</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Installing 29-gauge steel siding arrays, proper ridge venting layouts, and commercial door assemblies.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: ESTIMATOR -->
+        <section id="configurator" class="tab-content">
+            <div class="config-container">
+                <div class="config-panel">
+                    <h2 style="margin-bottom: 0.5rem;">Select Build Type</h2>
+                    <p style="color: var(--text-light); margin-bottom: 1.5rem; font-size: 0.9rem;">Adjust layout options to calculate structural crew and material contract metrics.</p>
+                    
+                    <div class="config-group">
+                        <label>Structural Building Services</label>
+                        <select class="select-input" id="struct-type" onchange="updateConfigurator()">
+                            <option value="barn">Substantial Post-Frame Barn</option>
+                            <option value="gazebo">Architectural Open-Air Gazebo</option>
+                        </select>
+                    </div>
+
+                    <div class="config-group">
+                        <label>Footprint Allocations</label>
+                        <select class="select-input" id="struct-size" onchange="updateConfigurator()">
+                            <!-- Managed via state script -->
+                        </select>
+                    </div>
+
+                    <div class="config-group" id="height-container">
+                        <label>Interior Eave Ceiling Clearance</label>
+                        <select class="select-input" id="struct-height" onchange="updateConfigurator()">
+                            <option value="10">10 Foot Eave Clearance</option>
+                            <option value="12" selected>12 Foot Eave Clearance</option>
+                            <option value="14">14 Foot Eave Clearance</option>
+                            <option value="16">16 Foot Eave Clearance</option>
+                        </select>
+                    </div>
+
+                    <div class="config-group">
+                        <label>Wall Panel Siding Tones</label>
+                        <div class="swatch-grid" id="wall-swatches"></div>
+                    </div>
+
+                    <div class="config-group">
+                        <label>Roof Panel Sheeting Tones</label>
+                        <div class="swatch-grid" id="roof-swatches"></div>
+                    </div>
+
+                    <div class="config-group">
+                        <label>Contract Add-ons & Turn-key Additions</label>
+                        <div class="checkbox-tile-group" id="upgrades-container"></div>
+                    </div>
+                </div>
+
+                <div class="config-preview-panel">
+                    <div class="preview-canvas-wrapper">
+                        <svg id="preview-svg" width="320" height="280" viewBox="0 0 320 280">
+                            <!-- Dynamic Structural Elements -->
+                        </svg>
+                    </div>
+
+                    <div class="price-display">
+                        <div>
+                            <p style="font-size: 0.85rem; color: #94a3b8; font-weight: 600; text-transform: uppercase;">Turn-Key Range (Est)</p>
+                            <span class="price-value" id="live-price">$0.00</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="proceedToQuote()"><i class="fa-solid fa-calendar-check"></i> Consult On Layout</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: PORTFOLIO -->
+        <section id="gallery" class="tab-content">
+            <h2 style="margin-bottom: 0.5rem;">Completed Service Portfolio</h2>
+            <p style="color: var(--text-light); margin-bottom: 2rem;">Real job sites built across our delivery boundaries over the last 12 months.</p>
+            
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterGallery('all')">All Sites</button>
+                <button class="filter-btn" onclick="filterGallery('barn')">Post-Frame Barns</button>
+                <button class="filter-btn" onclick="filterGallery('gazebo')">Gazebos & Pavilions</button>
+            </div>
+
+            <div class="gallery-grid" id="gallery-wrapper"></div>
+        </section>
+
+        <!-- TAB 4: CONSULTATION REQUEST -->
+        <section id="quote" class="tab-content">
+            <div class="quote-layout">
+                <h2 style="margin-bottom: 0.5rem;">Schedule Site Consultation</h2>
+                <p style="color: var(--text-light); margin-bottom: 2rem;">Confirm your parameters below to route data directly to our operational estimation foreman.</p>
+                
+                <form id="quote-form" onsubmit="handleFormSubmit(event)">
+                    <div class="config-group">
+                        <label>Selected Estimator Layout Scope</label>
+                        <textarea class="text-input" id="quote-summary" rows="3" readonly style="resize: none; background-color: #f1f5f9; font-size: 0.9rem;"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="config-group">
+                            <label>Full Contact Name</label    <div class="bg-slate-900 border-b border-slate-800 text-center py-2.5 px-4 text-[11px] font-medium tracking-wider text-slate-400 flex items-center justify-center gap-2">
         <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
         <span>Current Pricing reflect Q3 engineered lumber indexes for regional delivery grids.</span>
     </div>
