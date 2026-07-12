@@ -1,14 +1,18 @@
-            margin: 0;
-            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pole Barn Visualizer - Material Options</title>
+  <title>Pole Barn Customizer</title>
   <style>
-    /* Global Styles for Context */
+    /* Global Canvas Layout */
     body {
-      background-color: #1e2022;
+      background-color: #141517;
+      background-image: 
+        radial-gradient(at 50% 0%, rgba(38, 42, 49, 0.4) 0px, transparent 75%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 24px 24px, 24px 24px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       color: #f5f5f7;
       display: flex;
@@ -18,427 +22,283 @@
       min-height: 100vh;
       margin: 0;
       padding: 20px;
+      box-sizing: border-box;
     }
 
-    .visualizer-panel {
-      background: #282a2d;
-      border-radius: 16px;
-      padding: 24px;
+    /* Main Visualizer App Container */
+    .visualizer-container {
+      background: #202226;
+      border-radius: 20px;
       width: 100%;
-      max-width: 450px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-      border: 1px solid #383a3e;
+      max-width: 480px;
+      box-shadow: 
+        0 0 1px 1px rgba(255, 255, 255, 0.08) inset,
+        0 30px 60px rgba(0, 0, 0, 0.6);
+      border: 1px solid #111214;
+      overflow: hidden;
+    }
+
+    /* Application Header */
+    .visualizer-header {
+      padding: 24px 24px 16px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.02), transparent);
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 159, 67, 0.15);
+      color: #ff9f43;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 159, 67, 0.2);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(180deg, #ffffff 0%, #bdc3c7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.subtitle {
+      margin: 4px 0 0 0;
+      font-size: 0.85rem;
+      color: #8a909c;
+    }
+
+    /* Main Render Display Box */
+    .render-preview-window {
+      margin: 0 24px;
+      height: 160px;
+      background: #17181c;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.4);
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Image layers within the display box */
+    .steel-panel-preview {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-image 0.25s ease-in-out;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .preview-overlay-text {
+      width: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 10px 0;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Control Panel Content Area */
+    .control-panel {
+      padding: 24px;
     }
 
     h3 {
       margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 1.1rem;
-      letter-spacing: 0.5px;
-      color: #9ea4b0;
+      margin-bottom: 16px;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      color: #8a909c;
       text-transform: uppercase;
     }
 
     /* --- 3D OPTIONS GRID SYSTEM --- */
-
     .visualizer-options-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-      gap: 24px;
-      padding: 15px 5px;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 20px;
     }
 
     /* The actual 3D option card container */
     .color-option-card {
       position: relative;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
-      background: #151617; /* Dark underside bevel shadow color */
+      background: #0d0e10; /* Solid dark underside depth */
       border: none;
       padding: 0;
       outline: none;
       width: 100%;
       
-      /* Hard-stacked shadows create the physical side-edge extrusion */
+      /* Multi-layered shadows render the sharp physical extrusion */
       box-shadow: 
-        0 1px 0px #151617,
-        0 2px 0px #151617,
-        0 3px 0px #151617,
-        0 4px 0px #151617,
-        0 5px 0px #151617,
-        0 8px 12px rgba(0, 0, 0, 0.5); /* Ambient drop shadow on floor */
+        0 1px 0px #0d0e10,
+        0 2px 0px #0d0e10,
+        0 3px 0px #0d0e10,
+        0 4px 0px #0d0e10,
+        0 5px 0px #0d0e10,
+        0 8px 16px rgba(0, 0, 0, 0.5); 
         
-      transform: translateY(-5px); /* Raised up state by default */
+      transform: translateY(-5px); 
       transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.1s cubic-bezier(0.25, 1, 0.5, 1);
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* The top face surface containing the color layer */
+    /* Face layer surface of the card */
     .color-option-card .surface {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: flex-start;
-      height: 80px;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.12); /* Subtle metallic highlight rim */
+      height: 90px;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1); /* Metal rim highlight */
       color: #ffffff;
       font-weight: 600;
       font-size: 0.9rem;
       text-shadow: 0 2px 4px rgba(0,0,0,0.8);
       box-sizing: border-box;
-      text-align: left;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
-    /* Color Swatch Definitions (Simulating textured/matte metal siding) */
-    .color-option-card .surface.coffee {
-      background: linear-gradient(135deg, #463025 0%, #36231a 100%);
+    /* Micro-text swatches info */
+    .color-option-card .surface::after {
+      content: "Texture Finish";
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.7);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+      margin-top: 2px;
     }
 
-    .color-option-card .surface.espresso {
-      background: linear-gradient(135deg, #2d2b2a 0%, #1f1e1d 100%);
-    }
-
-    .color-option-card .surface.charcoal {
-      background: linear-gradient(135deg, #3a3d40 0%, #282a2c 100%);
-    }
-
-    /* --- INTERACTIVE STATES --- */
-
-    /* Slight lift on hover */
+    /* --- STATES & INTERACTIONS --- */
     .color-option-card:hover {
       transform: translateY(-6px);
     }
 
-    /* Pressed down behavior on click/active and lock when selected */
+    /* Flatten extrusion instantly on selection or click hold */
     .color-option-card:active,
     .color-option-card.selected {
-      transform: translateY(0px); /* Pushed perfectly flush to background grid */
-      
-      /* Collapses the side depth extrusion shadow */
+      transform: translateY(0px);
       box-shadow: 
-        0 1px 0px #151617,
-        0 2px 4px rgba(0, 0, 0, 0.6); 
+        0 1px 0px #0d0e10,
+        0 2px 4px rgba(0, 0, 0, 0.6);
     }
 
-    /* Vivid glowing accent outline ring for the selected choice */
+    /* Accent color border for active selection */
     .color-option-card.selected .surface {
-      border-color: #ff9f43; /* High-visibility construction orange/gold tone */
+      border-color: #ff9f43; 
       box-shadow: inset 0 0 0 2px rgba(255, 159, 67, 0.4);
     }
   </style>
 </head>
 <body>
 
-  <div class="visualizer-panel">
-    <h3>Select Metal Color</h3>
+  <div class="visualizer-container">
     
-    <div class="visualizer-options-grid">
-      
-      <!-- Coffee Option -->
-      <button class="color-option-card selected" onclick="selectColor(this)">
-        <span class="surface coffee">Coffee</span>
-      </button>
-
-      <!-- Espresso Option -->
-      <button class="color-option-card" onclick="selectColor(this)">
-        <span class="surface espresso">Espresso</span>
-      </button>
-
-      <!-- Charcoal Option -->
-      <button class="color-option-card" onclick="selectColor(this)">
-        <span class="surface charcoal">Charcoal</span>
-      </button>
-
+    <!-- Configurator Branding Section -->
+    <div class="visualizer-header">
+      <span class="badge">Live Material Builder</span>
+      <h1>Configure Exterior</h1>
+      <p class="subtitle">Select options below to update your building panel texture.</p>
     </div>
+
+    <!-- Dynamic Material Render Window -->
+    <div class="render-preview-window">
+      <div id="materialPreview" class="steel-panel-preview">
+        <div class="preview-overlay-text">3D MATERIAL VIEW</div>
+      </div>
+    </div>
+
+    <!-- Controls Selector Grid -->
+    <div class="control-panel">
+      <h3>Metal Siding Shell</h3>
+      
+      <div class="visualizer-options-grid">
+        
+        <!-- 
+          DIRECTIONS: Change the data-img attribute value below to your exact file paths 
+          Example: data-img="images/coffee-panel.jpg" or data-img="assets/espresso.png"
+        -->
+
+        <!-- Coffee Block Selection -->
+        <button class="color-option-card selected" 
+                data-img="https://placehold.co/400x300/463025/ffffff?text=Coffee+Metal" 
+                data-fallback="#463025"
+                onclick="updateVisualizer(this, 'Coffee')">
+          <span class="surface" style="background-image: url('https://placehold.co/150x150/463025/ffffff?text=Coffee')">Coffee</span>
+        </button>
+
+        <!-- Espresso Block Selection -->
+        <button class="color-option-card" 
+                data-img="https://placehold.co/400x300/2d2b2a/ffffff?text=Espresso+Metal" 
+                data-fallback="#2d2b2a"
+                onclick="updateVisualizer(this, 'Espresso')">
+          <span class="surface" style="background-image: url('https://placehold.co/150x150/2d2b2a/ffffff?text=Espresso')">Espresso</span>
+        </button>
+
+        <!-- Charcoal Block Selection -->
+        <button class="color-option-card" 
+                data-img="https://placehold.co/400x300/3a3d40/ffffff?text=Charcoal+Metal" 
+                data-fallback="#3a3d40"
+                onclick="updateVisualizer(this, 'Charcoal')">
+          <span class="surface" style="background-image: url('https://placehold.co/150x150/3a3d40/ffffff?text=Charcoal')">Charcoal</span>
+        </button>
+
+      </div>
+    </div>
+    
   </div>
 
   <script>
-    // Simple state switcher to handle active card selections
-    function selectColor(element) {
-      // Find all sibling option cards in the grid and remove selection
+    function updateVisualizer(element, labelText) {
+      // 1. Handle selection toggle state across cards
       const cards = element.parentElement.querySelectorAll('.color-option-card');
       cards.forEach(card => card.classList.remove('selected'));
-      
-      // Lock the clicked card into the compressed 3D down-state
       element.classList.add('selected');
+      
+      // 2. Fetch image paths and hex backups directly from element attributes
+      const newImageUrl = element.getAttribute('data-img');
+      const fallbackColor = element.getAttribute('data-fallback');
+      
+      const previewWindow = document.getElementById('materialPreview');
+      
+      // 3. Render image to the display panel window smoothly
+      previewWindow.style.backgroundImage = `url('${newImageUrl}')`;
+      previewWindow.style.backgroundColor = fallbackColor;
     }
+
+    // Set initial layout state on load execution
+    document.addEventListener("DOMContentLoaded", function() {
+      const activeCard = document.querySelector('.color-option-card.selected');
+      if(activeCard) {
+        updateVisualizer(activeCard, 'Coffee');
+      }
+    });
   </script>
 
 </body>
 </html>
-: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-light);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-
-        .contractor-bar {
-            background-color: #1e293b;
-            color: #94a3b8;
-            font-size: 0.85rem;
-            padding: 0.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid #334155;
-        }
-
-        header {
-            background-color: var(--primary);
-            color: var(--white);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            cursor: pointer;
-        }
-
-        .logo span {
-            color: #f97316;
-        }
-
-        nav {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            color: #94a3b8;
-            padding: 0.6rem 1.2rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border-radius: var(--radius);
-        }
-
-        .tab-btn:hover {
-            color: var(--white);
-            background-color: rgba(255,255,255,0.05);
-        }
-
-        .tab-btn.active {
-            color: var(--white);
-            background-color: var(--accent);
-        }
-
-        main {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-            min-height: 75vh;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Home Tab Content */
-        .hero {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 3rem;
-            align-items: center;
-            padding: 2.5rem 0;
-        }
-
-        .hero-text h1 {
-            font-size: 2.75rem;
-            color: var(--primary);
-            line-height: 1.15;
-            margin-bottom: 1.25rem;
-        }
-
-        .hero-text p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary { background-color: var(--accent); color: var(--white); border: none; }
-        .btn-primary:hover { background-color: var(--accent-hover); }
-        .btn-secondary { background-color: transparent; color: var(--primary); border: 2px solid var(--primary); }
-        .btn-secondary:hover { background-color: var(--primary); color: var(--white); }
-
-        .badge-grid {
-            background: #f1f5f9;
-            padding: 2rem;
-            border-radius: var(--radius);
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-            border-left: 4px solid var(--accent);
-        }
-
-        .badge-item {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-        }
-
-        .badge-item i {
-            color: var(--accent);
-            font-size: 1.25rem;
-            margin-top: 0.2rem;
-        }
-
-        .section-title {
-            font-size: 1.75rem;
-            color: var(--primary);
-            margin: 3rem 0 1.5rem 0;
-            text-align: center;
-        }
-
-        .process-flow {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 4rem;
-        }
-
-        .process-step {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            position: relative;
-        }
-
-        .step-num {
-            position: absolute;
-            top: -15px;
-            right: 15px;
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #e2e8f0;
-            line-height: 1;
-        }
-
-        /* Design Configurator */
-        .config-container {
-            display: grid;
-            grid-template-columns: 460px 1fr;
-            gap: 2rem;
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-
-        .config-panel {
-            padding: 2rem;
-            border-right: 1px solid var(--border);
-            max-height: 820px;
-            overflow-y: auto;
-        }
-
-        .config-preview-panel {
-            background: #e2e8f0;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .config-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .config-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .select-input, .text-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            background-color: var(--bg-light);
-            font-size: 1rem;
-        }
-
-        .swatch-grid {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .swatch {
-            width: 34px;
-            height: 34px;
-            border-radius: 4px;
-            border: 2px solid var(--white);
-            outline: 1px solid var(--border);
-            cursor: pointer;
-        }
-
-        .swatch.selected { outline: 2px solid var(--accent); }
-
-        .checkbox-tile-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .checkbox-tile {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+gap: 1rem;
             padding: 0.75rem;
             border: 1px solid var(--border);
             border-radius: var(--radius);
