@@ -1,5 +1,4 @@
-                                <div>
-          <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +11,9 @@
     <style>
         @keyframes pulse-fast { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         .live-glow { animation: pulse-fast 1.5s infinite; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-slate-950 text-white font-sans selection:bg-amber-500 selection:text-slate-900">
@@ -39,24 +41,33 @@
 
     <main class="max-w-7xl mx-auto p-4 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Left Side: Interactive Engine Viewport -->
+        <!-- Left Side: Dynamic Image Visualizer Arena -->
         <div class="lg:col-span-7 space-y-4">
             <div class="bg-slate-900/50 border border-slate-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden backdrop-blur-sm">
                 <div class="absolute -top-24 -left-24 w-48 h-48 bg-amber-500/10 blur-3xl rounded-full"></div>
                 
                 <div class="flex justify-between items-center mb-4 relative z-10">
                     <div>
-                        <span class="text-[10px] font-bold tracking-widest text-amber-500 uppercase">3D Perspective Arena</span>
-                        <h2 class="text-xl font-black tracking-tight mt-0.5">Your Blueprint Draft</h2>
+                        <span class="text-[10px] font-bold tracking-widest text-amber-500 uppercase">Interactive Render Hub</span>
+                        <h2 class="text-xl font-black tracking-tight mt-0.5" id="visualizerTitle">Suburban Workshop Setup</h2>
                     </div>
-                    <div class="bg-slate-800 border border-slate-700 px-3 py-1 rounded-xl text-xs font-mono text-slate-300">
-                        FPS: <span class="text-emerald-400 font-bold">60</span>
+                    <div class="bg-slate-800 border border-slate-700 px-3 py-1 rounded-xl text-xs font-mono text-emerald-400 font-bold flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-check"></i> Live Preview
                     </div>
                 </div>
                 
-                <!-- Canvas Stage -->
-                <div class="bg-slate-950/80 rounded-2xl border border-slate-800/80 overflow-hidden flex items-center justify-center min-h-[350px] lg:min-h-[420px] relative shadow-inner">
-                    <canvas id="barnCanvas" width="600" height="400" class="w-full h-auto max-w-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]"></canvas>
+                <!-- HD Dynamic Display Image Container -->
+                <div class="bg-slate-950/80 rounded-2xl border border-slate-800/80 overflow-hidden relative shadow-inner min-h-[350px] lg:min-h-[420px] flex items-center justify-center">
+                    <img id="mainBarnVisual" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" class="w-full h-full min-h-[350px] lg:min-h-[420px] object-cover transition-all duration-500 filter brightness-90" alt="Main Barn Preview">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                    
+                    <!-- Dynamic floating specification badge overlay -->
+                    <div class="absolute bottom-4 left-4 bg-slate-900/90 backdrop-blur-md border border-slate-700 p-3 rounded-xl text-xs space-y-1">
+                        <p class="text-slate-400">Current Model Specs:</p>
+                        <p class="font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-vector-square text-amber-500"></i> <span id="overlayDimensions">30' x 40' Truss System</span>
+                        </p>
+                    </div>
                 </div>
 
                 <!-- Dynamic Pricing Panel -->
@@ -88,7 +99,7 @@
             </div>
         </div>
 
-        <!-- Right Side: Control Hub & Psychology Lead Funnel -->
+        <!-- Right Side: Control Hub & Options Panel -->
         <div class="lg:col-span-5 space-y-6">
             
             <div class="grid grid-cols-2 gap-2 bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
@@ -101,12 +112,31 @@
             </div>
 
             <!-- Panel 1: Configuration Form -->
-            <div id="panel-design" class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6 overflow-y-auto max-h-[75vh]">
+            <div id="panel-design" class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6 overflow-y-auto max-h-[75vh] custom-scrollbar">
                 
-                <!-- Dimensions -->
+                <!-- NEW OPTION: Primary Structural Use Case (Changes Main Visual Image) -->
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3">1. Select Framing Blueprint Style</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div onclick="selectModel('workshop', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80', this)" class="model-card border-2 border-amber-500 bg-slate-950/80 p-3 rounded-xl cursor-pointer hover:border-slate-600 transition-all">
+                            <p class="text-xs font-black text-white flex items-center gap-2">
+                                <i class="fa-solid fa-screwdriver-wrench text-amber-500"></i> Suburban Workshop
+                            </p>
+                            <p class="text-[10px] text-slate-500 mt-1">Standard residential shop style rooflines</p>
+                        </div>
+                        <div onclick="selectModel('ag', 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80', this)" class="model-card border border-slate-800 bg-slate-950/80 p-3 rounded-xl cursor-pointer hover:border-slate-600 transition-all">
+                            <p class="text-xs font-black text-white flex items-center gap-2">
+                                <i class="fa-solid fa-tractor text-slate-400"></i> Agricultural Storage
+                            </p>
+                            <p class="text-[10px] text-slate-500 mt-1">High-clearance bays for farm machinery</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footprint Dimensions Options -->
                 <div>
                     <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3 flex items-center justify-between">
-                        <span>Select Footprint Size</span>
+                        <span>2. System Dimensions</span>
                         <span class="text-amber-500 normal-case font-medium font-mono text-[11px]" id="sqftDisplay">1200 Sq Ft</span>
                     </label>
                     <div class="grid grid-cols-2 gap-3">
@@ -129,16 +159,101 @@
                     </div>
                 </div>
 
-                <!-- NEW OPTION: Visual Siding Picker Cards with HD Image Backgrounds -->
+                <!-- Siding Selector Tiles with Real Texture Backgrounds -->
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3">Premium Metal Siding Style</label>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3">3. Heavy-Duty Steel Siding Texture</label>
                     <div class="grid grid-cols-2 gap-3">
-                        <!-- Option 1 -->
-                        <div onclick="selectSiding('#991b1b', this)" class="siding-card border-2 border-amber-500 bg-slate-950/80 rounded-xl overflow-hidden cursor-pointer shadow-md group relative h-24">
-                            <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=250&q=80" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-all" alt="Red Steel">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-2 flex flex-col justify-end">
+                        <!-- Red Option -->
+                        <div onclick="selectSiding('#991b1b', this)" class="siding-card border-2 border-amber-500 bg-slate-950/80 rounded-xl overflow-hidden cursor-pointer shadow-md group relative h-20">
+                            <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=250&q=80" class="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:scale-105 transition-all" alt="Red Siding">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-2.5 flex flex-col justify-end">
                                 <p class="text-xs font-black text-white">Crimson Red</p>
-                                <p class="text-[10px] text-slate-400">Traditional Matte</p>
+                                <p class="text-[10px] text-slate-400">29-Gauge Classic</p>
+                            </div>
+                        </div>
+                        <!-- Charcoal Option -->
+                        <div onclick="selectSiding('#1e293b', this)" class="siding-card border border-slate-800 bg-slate-950/80 rounded-xl overflow-hidden cursor-pointer shadow-md group relative h-20">
+                            <img src="https://images.unsplash.com/photo-1531834685988-c388d2c019ec?auto=format&fit=crop&w=250&q=80" class="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:scale-105 transition-all" alt="Charcoal Siding">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-2.5 flex flex-col justify-end">
+                                <p class="text-xs font-black text-white">Charcoal Grey</p>
+                                <p class="text-[10px] text-slate-400">Architectural Slate</p>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="wallColor" value="#991b1b">
+                </div>
+
+                <!-- NEW OPTION: Door & Window Packages with UI Images -->
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3">4. Fenestration & Light Package</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex flex-col bg-slate-950/50 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer overflow-hidden transition-all">
+                            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=300&q=80" class="w-full h-20 object-cover opacity-60" alt="Window Panel">
+                            <div class="p-3 space-y-1">
+                                <div class="flex items-center gap-2">
+                                    <input type="checkbox" id="addWindows" onchange="updateConfig()" class="w-3.5 h-3.5 text-amber-500 accent-amber-500">
+                                    <span class="text-xs font-bold text-white">Triple Window Array</span>
+                                </div>
+                                <p class="text-[9px] text-slate-500">3'x4' insulated thermo-panes</p>
+                                <p class="text-xs font-mono font-bold text-emerald-400 mt-1">+$1,150</p>
+                            </div>
+                        </label>
+
+                        <label class="flex flex-col bg-slate-950/50 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer overflow-hidden transition-all">
+                            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=300&q=80" class="w-full h-20 object-cover opacity-60" alt="Slider Track">
+                            <div class="p-3 space-y-1">
+                                <div class="flex items-center gap-2">
+                                    <input type="checkbox" id="addDoor" checked onchange="updateConfig()" class="w-3.5 h-3.5 text-amber-500 accent-amber-500">
+                                    <span class="text-xs font-bold text-white">12x12 Slider Door</span>
+                                </div>
+                                <p class="text-[9px] text-slate-500">Heavy duty dual-track rollers</p>
+                                <p class="text-xs font-mono font-bold text-emerald-400 mt-1">+$1,200</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Foundation Anchor Configuration Options -->
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3">5. Foundation Engineering</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex items-center gap-3 bg-slate-950/50 p-3 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer">
+                            <input type="radio" name="postFoundation" value="dirt" checked onchange="updateConfig()" class="w-4 h-4 text-amber-500 accent-amber-500">
+                            <div>
+                                <p class="text-xs font-bold text-white">In-Ground Posts</p>
+                                <p class="text-[10px] text-slate-500">Gravel boot footing</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 bg-slate-950/50 p-3 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer">
+                            <input type="radio" name="postFoundation" value="pier" onchange="updateConfig()" class="w-4 h-4 text-amber-500 accent-amber-500">
+                            <div>
+                                <p class="text-xs font-bold text-white">Wet-Slip Piers</p>
+                                <p class="text-[10px] text-slate-500">Perma-Column brackets (+$1,400)</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button onclick="switchTab('quote')" class="w-full relative group overflow-hidden bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-xs uppercase tracking-widest py-4 rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.3)] hover:shadow-[0_4px_25px_rgba(245,158,11,0.5)] transition-all transform hover:-translate-y-0.5">
+                    <span class="relative z-10 flex items-center justify-center gap-2">
+                        Lock In Promotional Price <i class="fa-solid fa-arrow-right text-sm"></i>
+                    </span>
+                    <div class="absolute inset-0 w-full h-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                </button>
+            </div>
+
+            <!-- Panel 2: Marketing Lead Form -->
+            <div id="panel-quote" class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-5 hidden">
+                <div class="text-center pb-3 border-b border-slate-800">
+                    <span class="bg-amber-500/10 text-amber-400 text-[10px] font-black uppercase px-2.5 py-1 rounded-md border border-amber-500/20 tracking-wider">Final Step</span>
+                    <h3 class="text-lg font-black tracking-tight mt-2">Generate Complete Material Manifest</h3>
+                    <p class="text-xs text-slate-400 mt-1">We will send your system specs, engineering layouts, and regional delivery routing costs.</p>
+                </div>
+
+                <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-[10px] uppercase font-black tracking-wider text-slate-400 mb-1">Your Direct Contact Name</label>
+                        <input type="text" required placeholder="First and Last Name" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-sm faditional Matte</p>
                             </div>
                         </div>
                         <!-- Option 2 -->
