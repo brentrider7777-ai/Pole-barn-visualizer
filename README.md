@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+                                <div>
+          <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -41,7 +42,6 @@
         <!-- Left Side: Interactive Engine Viewport -->
         <div class="lg:col-span-7 space-y-4">
             <div class="bg-slate-900/50 border border-slate-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden backdrop-blur-sm">
-                <!-- Absolute background accents -->
                 <div class="absolute -top-24 -left-24 w-48 h-48 bg-amber-500/10 blur-3xl rounded-full"></div>
                 
                 <div class="flex justify-between items-center mb-4 relative z-10">
@@ -49,7 +49,6 @@
                         <span class="text-[10px] font-bold tracking-widest text-amber-500 uppercase">3D Perspective Arena</span>
                         <h2 class="text-xl font-black tracking-tight mt-0.5">Your Blueprint Draft</h2>
                     </div>
-                    <!-- Real-time dynamic feature badge -->
                     <div class="bg-slate-800 border border-slate-700 px-3 py-1 rounded-xl text-xs font-mono text-slate-300">
                         FPS: <span class="text-emerald-400 font-bold">60</span>
                     </div>
@@ -60,7 +59,7 @@
                     <canvas id="barnCanvas" width="600" height="400" class="w-full h-auto max-w-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]"></canvas>
                 </div>
 
-                <!-- Dynamic Pricing Panel with Massive Contrast -->
+                <!-- Dynamic Pricing Panel -->
                 <div class="mt-6 p-5 bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl border border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Estimated Materials Total</p>
@@ -92,7 +91,6 @@
         <!-- Right Side: Control Hub & Psychology Lead Funnel -->
         <div class="lg:col-span-5 space-y-6">
             
-            <!-- Modern Gamified Stepper Navigation -->
             <div class="grid grid-cols-2 gap-2 bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
                 <button onclick="switchTab('design')" id="tab-design" class="w-full py-3 text-xs font-black tracking-wider uppercase rounded-xl bg-amber-500 text-slate-950 shadow-lg transition-all flex items-center justify-center gap-2">
                     <i class="fa-solid fa-sliders"></i> 1. Customize
@@ -103,8 +101,9 @@
             </div>
 
             <!-- Panel 1: Configuration Form -->
-            <div id="panel-design" class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6">
-                <!-- Dimensions Configuration Area -->
+            <div id="panel-design" class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6 overflow-y-auto max-h-[75vh]">
+                
+                <!-- Dimensions -->
                 <div>
                     <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3 flex items-center justify-between">
                         <span>Select Footprint Size</span>
@@ -112,7 +111,7 @@
                     </label>
                     <div class="grid grid-cols-2 gap-3">
                         <div class="relative">
-                            <select id="barnWidth" onchange="updateConfig()" class="w-full appearance-none bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all cursor-pointer">
+                            <select id="barnWidth" onchange="updateConfig()" class="w-full appearance-none bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-white focus:outline-none focus:border-amber-500 cursor-pointer">
                                 <option value="24">24 Ft Wide</option>
                                 <option value="30" selected>30 Ft Wide</option>
                                 <option value="40">40 Ft Wide</option>
@@ -120,7 +119,7 @@
                             <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs pointer-events-none"></i>
                         </div>
                         <div class="relative">
-                            <select id="barnLength" onchange="updateConfig()" class="w-full appearance-none bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all cursor-pointer">
+                            <select id="barnLength" onchange="updateConfig()" class="w-full appearance-none bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-white focus:outline-none focus:border-amber-500 cursor-pointer">
                                 <option value="30">30 Ft Long</option>
                                 <option value="40" selected>40 Ft Long</option>
                                 <option value="60">60 Ft Long</option>
@@ -130,27 +129,69 @@
                     </div>
                 </div>
 
-                <!-- Commercial Color Profiles -->
+                <!-- NEW OPTION: Visual Siding Picker Cards with HD Image Backgrounds -->
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3">Siding & Trim Aesthetics</label>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3">Premium Metal Siding Style</label>
                     <div class="grid grid-cols-2 gap-3">
-                        <div class="relative">
-                            <select id="wallColor" onchange="updateConfig()" class="w-full appearance-none bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-xs font-bold text-white focus:outline-none focus:border-amber-500 transition-all cursor-pointer">
-                                <option value="#991b1b" selected>🔴 Crimson Red</option>
-                                <option value="#1e293b">⚫ Charcoal Grey</option>
-                                <option value="#14532d">🟢 Forest Green</option>
-                                <option value="#f8fafc">⚪ Bright White</option>
-                            </select>
-                            <i class="fa-solid fa-palette absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs pointer-events-none"></i>
+                        <!-- Option 1 -->
+                        <div onclick="selectSiding('#991b1b', this)" class="siding-card border-2 border-amber-500 bg-slate-950/80 rounded-xl overflow-hidden cursor-pointer shadow-md group relative h-24">
+                            <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=250&q=80" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-all" alt="Red Steel">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-2 flex flex-col justify-end">
+                                <p class="text-xs font-black text-white">Crimson Red</p>
+                                <p class="text-[10px] text-slate-400">Traditional Matte</p>
+                            </div>
                         </div>
-                        <div class="relative">
-                            <select id="roofColor" onchange="updateConfig()" class="w-full appearance-none bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-xs font-bold text-white focus:outline-none focus:border-amber-500 transition-all cursor-pointer">
-                                <option value="#1e293b" selected>⚫ Charcoal Trim</option>
-                                <option value="#ffffff">⚪ White Trim</option>
-                                <option value="#7f1d1d">🟤 Burgundy Trim</option>
-                            </select>
-                            <i class="fa-solid fa-palette absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs pointer-events-none"></i>
+                        <!-- Option 2 -->
+                        <div onclick="selectSiding('#1e293b', this)" class="siding-card border border-slate-800 bg-slate-950/80 rounded-xl overflow-hidden cursor-pointer shadow-md group relative h-24">
+                            <img src="https://images.unsplash.com/photo-1531834685988-c388d2c019ec?auto=format&fit=crop&w=250&q=80" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-all" alt="Charcoal Steel">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-2 flex flex-col justify-end">
+                                <p class="text-xs font-black text-white">Charcoal Grey</p>
+                                <p class="text-[10px] text-slate-400">Modern Textures</p>
+                            </div>
                         </div>
+                    </div>
+                    <input type="hidden" id="wallColor" value="#991b1b">
+                </div>
+
+                <!-- NEW OPTION: Engineered Pitch Roof Slopes -->
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3">Structural Roof Pitch</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex items-center gap-3 bg-slate-950/50 p-3 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer">
+                            <input type="radio" name="roofPitch" value="4" checked onchange="updateConfig()" class="w-4 h-4 text-amber-500 accent-amber-500">
+                            <div>
+                                <p class="text-xs font-bold text-white">4:12 Standard Pitch</p>
+                                <p class="text-[10px] text-slate-500">Perfect for standard storage</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 bg-slate-950/50 p-3 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer">
+                            <input type="radio" name="roofPitch" value="6" onchange="updateConfig()" class="w-4 h-4 text-amber-500 accent-amber-500">
+                            <div>
+                                <p class="text-xs font-bold text-white">6:12 High Pitch</p>
+                                <p class="text-[10px] text-slate-500">Snow shedding engineered</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- NEW OPTION: Sub-Surface Foundation Anchor Profiles -->
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3">Foundation Engineering</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex items-center gap-3 bg-slate-950/50 p-3 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer">
+                            <input type="radio" name="postFoundation" value="dirt" checked onchange="updateConfig()" class="w-4 h-4 text-amber-500 accent-amber-500">
+                            <div>
+                                <p class="text-xs font-bold text-white">In-Ground Posts</p>
+                                <p class="text-[10px] text-slate-500">Embedded with gravel boot</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 bg-slate-950/50 p-3 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer">
+                            <input type="radio" name="postFoundation" value="pier" onchange="updateConfig()" class="w-4 h-4 text-amber-500 accent-amber-500">
+                            <div>
+                                <p class="text-xs font-bold text-white">Concrete Wet-Piers</p>
+                                <p class="text-[10px] text-slate-500">Perma-Column brackets (+$1,400)</p>
+                            </div>
+                        </label>
                     </div>
                 </div>
 
@@ -160,9 +201,65 @@
                     <div class="space-y-2.5">
                         <label class="flex items-center justify-between bg-slate-950/50 p-3.5 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
                             <div class="flex items-center gap-3">
-                                <input type="checkbox" id="addWainscot" onchange="updateConfig()" class="w-4 h-4 rounded bg-slate-900 border-slate-700 text-amber-500 accent-amber-500 focus:ring-0">
+                                <input type="checkbox" id="addWainscot" onchange="updateConfig()" class="w-4 h-4 rounded bg-slate-900 border-slate-700 text-amber-500 accent-amber-500">
                                 <div>
                                     <p class="text-xs font-bold text-white">Two-Tone Wainscoting</p>
+                                    <p class="text-[10px] text-slate-500">Premium 3-foot color breakup</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-emerald-400">+$850</span>
+                        </label>
+
+                        <label class="flex items-center justify-between bg-slate-950/50 p-3.5 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" id="addDoor" onchange="updateConfig()" checked class="w-4 h-4 rounded bg-slate-900 border-slate-700 text-amber-500 accent-amber-500">
+                                <div>
+                                    <p class="text-xs font-bold text-white">Double Sliding Structural Door</p>
+                                    <p class="text-[10px] text-slate-500">12'x12' heavy duty structural track</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-emerald-400">+$1,200</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button onclick="switchTab('quote')" class="w-full relative group overflow-hidden bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-xs uppercase tracking-widest py-4 rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.3)] hover:shadow-[0_4px_25px_rgba(245,158,11,0.5)] transition-all transform hover:-translate-y-0.5">
+                    <span class="relative z-10 flex items-center justify-center gap-2">
+                        Lock In Promotional Price <i class="fa-solid fa-arrow-right text-sm"></i>
+                    </span>
+                    <div class="absolute inset-0 w-full h-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                </button>
+            </div>
+
+            <!-- Panel 2: Marketing Lead Form -->
+            <div id="panel-quote" class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-5 hidden">
+                <div class="text-center pb-3 border-b border-slate-800">
+                    <span class="bg-amber-500/10 text-amber-400 text-[10px] font-black uppercase px-2.5 py-1 rounded-md border border-amber-500/20 tracking-wider">Final Step</span>
+                    <h3 class="text-lg font-black tracking-tight mt-2">Generate Complete Material Manifest</h3>
+                    <p class="text-xs text-slate-400 mt-1">We will send your system specs, engineering layouts, and regional delivery routing costs.</p>
+                </div>
+
+                <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-[10px] uppercase font-black tracking-wider text-slate-400 mb-1">Your Direct Contact Name</label>
+                        <input type="text" required placeholder="First and Last Name" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-white placeholder-slate-600 focus:outline-none focus:border-amber-500 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase font-black tracking-wider text-slate-400 mb-1">Secure Delivery Email Address</label>
+                        <input type="email" required placeholder="name@domain.com" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-white placeholder-slate-600 focus:outline-none focus:border-amber-500 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase font-black tracking-wider text-slate-400 mb-1">Target Build Zip Code</label>
+                        <input type="text" required placeholder="e.g. 48827" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-sm font-bold text-white placeholder-slate-600 focus:outline-none focus:border-amber-500 transition-all">
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black text-xs uppercase tracking-widest py-4 rounded-xl shadow-[0_4px_20px_rgba(16,185,129,0.3)] hover:shadow-[0_4px_25px_rgba(16,185,129,0.5)] transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-cloud-arrow-down mr-1"></i> Send Instant Blueprints
+                    </button>
+                </form>
+                
+                <button onclick="switchTab('design')" class="w-full text-center text-[11px] font-bold text-slate-500 hover:text-slate-300 transition-all underline">
+                    ← Change Dimensi                          <p class="text-xs font-bold text-white">Two-Tone Wainscoting</p>
                                     <p class="text-[10px] text-slate-500">Premium 3-foot color breakup</p>
                                 </div>
                             </div>
