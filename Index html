@@ -1,0 +1,23 @@
+function handleLeadSubmit(e) {
+    e.preventDefault();
+    
+    const leadData = {
+        name: e.target[0].value,
+        email: e.target[1].value,
+        zip: e.target[2].value,
+        specs: {
+            width: document.getElementById('barnWidth').value,
+            length: document.getElementById('barnLength').value,
+            wall: document.getElementById('wallColor').value,
+            price: document.getElementById('priceDisplay').innerText
+        }
+    };
+
+    fetch('YOUR_WEBHOOK_URL_HERE', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(leadData)
+    }).then(() => {
+        alert("Your custom quote has been sent successfully!");
+    });
+}
