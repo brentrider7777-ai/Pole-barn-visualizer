@@ -1,28 +1,174 @@
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, <!DOCTYPE html>
+            margin: 0;
+            <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kilbourne Builds | Proprietary Post-Frame Engineering</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <style>
-        :root {
-            --primary: #0f172a;
-            --accent: #c2410c;
-            --accent-hover: #9a3412;
-            --text-main: #334155;
-            --text-light: #64748b;
-            --bg-light: #f8fafc;
-            --white: #ffffff;
-            --border: #e2e8f0;
-            --radius: 8px;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pole Barn Visualizer - Material Options</title>
+  <style>
+    /* Global Styles for Context */
+    body {
+      background-color: #1e2022;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #f5f5f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+    .visualizer-panel {
+      background: #282a2d;
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      border: 1px solid #383a3e;
+    }
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+      color: #9ea4b0;
+      text-transform: uppercase;
+    }
+
+    /* --- 3D OPTIONS GRID SYSTEM --- */
+
+    .visualizer-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 24px;
+      padding: 15px 5px;
+    }
+
+    /* The actual 3D option card container */
+    .color-option-card {
+      position: relative;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #151617; /* Dark underside bevel shadow color */
+      border: none;
+      padding: 0;
+      outline: none;
+      width: 100%;
+      
+      /* Hard-stacked shadows create the physical side-edge extrusion */
+      box-shadow: 
+        0 1px 0px #151617,
+        0 2px 0px #151617,
+        0 3px 0px #151617,
+        0 4px 0px #151617,
+        0 5px 0px #151617,
+        0 8px 12px rgba(0, 0, 0, 0.5); /* Ambient drop shadow on floor */
+        
+      transform: translateY(-5px); /* Raised up state by default */
+      transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.1s cubic-bezier(0.25, 1, 0.5, 1);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* The top face surface containing the color layer */
+    .color-option-card .surface {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      height: 80px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12); /* Subtle metallic highlight rim */
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+      box-sizing: border-box;
+      text-align: left;
+    }
+
+    /* Color Swatch Definitions (Simulating textured/matte metal siding) */
+    .color-option-card .surface.coffee {
+      background: linear-gradient(135deg, #463025 0%, #36231a 100%);
+    }
+
+    .color-option-card .surface.espresso {
+      background: linear-gradient(135deg, #2d2b2a 0%, #1f1e1d 100%);
+    }
+
+    .color-option-card .surface.charcoal {
+      background: linear-gradient(135deg, #3a3d40 0%, #282a2c 100%);
+    }
+
+    /* --- INTERACTIVE STATES --- */
+
+    /* Slight lift on hover */
+    .color-option-card:hover {
+      transform: translateY(-6px);
+    }
+
+    /* Pressed down behavior on click/active and lock when selected */
+    .color-option-card:active,
+    .color-option-card.selected {
+      transform: translateY(0px); /* Pushed perfectly flush to background grid */
+      
+      /* Collapses the side depth extrusion shadow */
+      box-shadow: 
+        0 1px 0px #151617,
+        0 2px 4px rgba(0, 0, 0, 0.6); 
+    }
+
+    /* Vivid glowing accent outline ring for the selected choice */
+    .color-option-card.selected .surface {
+      border-color: #ff9f43; /* High-visibility construction orange/gold tone */
+      box-shadow: inset 0 0 0 2px rgba(255, 159, 67, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="visualizer-panel">
+    <h3>Select Metal Color</h3>
+    
+    <div class="visualizer-options-grid">
+      
+      <!-- Coffee Option -->
+      <button class="color-option-card selected" onclick="selectColor(this)">
+        <span class="surface coffee">Coffee</span>
+      </button>
+
+      <!-- Espresso Option -->
+      <button class="color-option-card" onclick="selectColor(this)">
+        <span class="surface espresso">Espresso</span>
+      </button>
+
+      <!-- Charcoal Option -->
+      <button class="color-option-card" onclick="selectColor(this)">
+        <span class="surface charcoal">Charcoal</span>
+      </button>
+
+    </div>
+  </div>
+
+  <script>
+    // Simple state switcher to handle active card selections
+    function selectColor(element) {
+      // Find all sibling option cards in the grid and remove selection
+      const cards = element.parentElement.querySelectorAll('.color-option-card');
+      cards.forEach(card => card.classList.remove('selected'));
+      
+      // Lock the clicked card into the compressed 3D down-state
+      element.classList.add('selected');
+    }
+  </script>
+
+</body>
+</html>
+: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
