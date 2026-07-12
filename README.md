@@ -1,9 +1,9 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex Construction Group | Custom Pole Barns & Gazebos</title>
+    <title>Kilbourne Builds | Proprietary Post-Frame Engineering</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
         :root {
@@ -24,6 +24,522 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .contractor-bar {
+            background-color: #1e293b;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #334155;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: #f97316;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: var(--radius);
+        }
+
+        .tab-btn:hover {
+            color: var(--white);
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .tab-btn.active {
+            color: var(--white);
+            background-color: var(--accent);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            min-height: 75vh;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home Tab Content */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: center;
+            padding: 2.5rem 0;
+        }
+
+        .hero-text h1 {
+            font-size: 2.75rem;
+            color: var(--primary);
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary { background-color: var(--accent); color: var(--white); border: none; }
+        .btn-primary:hover { background-color: var(--accent-hover); }
+        .btn-secondary { background-color: transparent; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-secondary:hover { background-color: var(--primary); color: var(--white); }
+
+        .badge-grid {
+            background: #f1f5f9;
+            padding: 2rem;
+            border-radius: var(--radius);
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .badge-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .badge-item i {
+            color: var(--accent);
+            font-size: 1.25rem;
+            margin-top: 0.2rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            color: var(--primary);
+            margin: 3rem 0 1.5rem 0;
+            text-align: center;
+        }
+
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .process-step {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .step-num {
+            position: absolute;
+            top: -15px;
+            right: 15px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #e2e8f0;
+            line-height: 1;
+        }
+
+        /* Design Configurator */
+        .config-container {
+            display: grid;
+            grid-template-columns: 460px 1fr;
+            gap: 2rem;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .config-panel {
+            padding: 2rem;
+            border-right: 1px solid var(--border);
+            max-height: 820px;
+            overflow-y: auto;
+        }
+
+        .config-preview-panel {
+            background: #f1f5f9;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .config-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .config-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .select-input, .text-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background-color: var(--bg-light);
+            font-size: 1rem;
+        }
+
+        .swatch-grid {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .swatch {
+            width: 34px;
+            height: 34px;
+            border-radius: 4px;
+            border: 2px solid var(--white);
+            outline: 1px solid var(--border);
+            cursor: pointer;
+        }
+
+        .swatch.selected { outline: 2px solid var(--accent); }
+
+        .checkbox-tile-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .checkbox-tile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            background-color: var(--bg-light);
+            user-select: none;
+        }
+
+        .preview-canvas-wrapper {
+            background: var(--white);
+            width: 100%;
+            height: 440px;
+            border-radius: var(--radius);
+            box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .price-display {
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price-value {
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: #f97316;
+        }
+
+        /* Portfolio Cards */
+        .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+        .filter-btn {
+            background: var(--white); border: 1px solid var(--border);
+            padding: 0.5rem 1.25rem; border-radius: 20px; cursor: pointer;
+            font-weight: 600; transition: all 0.2s ease;
+        }
+        .filter-btn.active, .filter-btn:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
+        
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        .gallery-card { 
+            background: var(--white); 
+            border-radius: var(--radius); 
+            overflow: hidden; 
+            box-shadow: var(--shadow); 
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .gallery-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        .gallery-img-container { height: 210px; background-color: #cbd5e1; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .gallery-info { padding: 1.5rem; }
+        .gallery-info h3 { margin-bottom: 0.25rem; color: var(--primary); }
+
+        /* Consultation Onboarding Form */
+        .quote-layout { max-width: 650px; margin: 0 auto; background: var(--white); padding: 3rem; border-radius: var(--radius); box-shadow: var(--shadow); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        /* Interactive Detail Overlays (Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 1.5rem;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: var(--white);
+            max-width: 550px;
+            width: 100%;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: modalScale 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalScale {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-close {
+            background: none; border: none; color: #94a3b8; font-size: 1.25rem; cursor: pointer;
+        }
+        .modal-close:hover { color: var(--white); }
+        .modal-body { padding: 1.5rem; }
+        .modal-meta-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+        
+        /* Dynamic SVG patterns for textures */
+        .wood-grain-pattern { fill: #b45309; opacity: 0.15; }
+    </style>
+</head>
+<body>
+
+    <div class="contractor-bar">
+        <div><i class="fa-solid fa-microchip"></i> Powered by Kilbourne Proprietary Technology Systems</div>
+        <div><i class="fa-solid fa-phone"></i> Engineering Desk: (555) 839-2041</div>
+    </div>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="switchTab('home')">
+                <i class="fa-solid fa-shield-halved"></i> KILBOURNE <span>BUILDS</span>
+            </div>
+            <nav>
+                <button class="tab-btn active" id="btn-home" onclick="switchTab('home')">Proprietary Standards</button>
+                <button class="tab-btn" id="btn-configurator" onclick="switchTab('configurator')">Estimate Workspace</button>
+                <button class="tab-btn" id="btn-gallery" onclick="switchTab('gallery')">Recent Builds</button>
+                <button class="tab-btn" id="btn-quote" onclick="switchTab('quote')">Consultation</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- TAB 1: SERVICE STANDARDS -->
+        <section id="home" class="tab-content active">
+            <div class="hero">
+                <div class="hero-text">
+                    <h1>Engineered Infrastructure via Proprietary Technology</h1>
+                    <p>Kilbourne Builds transforms structural framing concepts into permanent assets. Utilizing our advanced, proprietary wind-load deflection tech, multi-ply column engineering, and weather-sealed interlocking panels, we construct high-performance agricultural spaces built for generations.</p>
+                    <div class="cta-group">
+                        <button class="btn btn-primary" onclick="switchTab('configurator')"><i class="fa-solid fa-gears"></i> Open Configurator Workspace</button>
+                        <button class="btn btn-secondary" onclick="switchTab('gallery')">Explore Completed Works</button>
+                    </div>
+                </div>
+                <div class="badge-grid">
+                    <div class="badge-item">
+                        <i class="fa-solid fa-microchip"></i>
+                        <div>
+                            <strong>Proprietary Frame Dynamics</strong>
+                            <p style="font-size: 0.9rem; color: var(--text-light)">Our engineered connection brackets and multi-laminated truss systems use proprietary technology blueprints to resist up to 145 MPH wind loads comfortably.</p>
+                        </div>
+                    </div>
+                    <div class="badge-item">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <div>
+                            <strong>Advanced Siding Matrices</strong>
+                            <p style="font-size: 0.9rem; color: var(--text-light)">From 29-gauge high-tensile steel rollings to treated cedar lap arrays, we deploy optimized material barriers against moisture intrusion.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Our Rigorous Build Workflow</h2>
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="step-num">01</div>
+                    <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Site Prep & Leveling</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Excavation teams clear brush, level terrain, and grade slope configurations for concrete pad allocations.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">02</div>
+                    <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Post Foundations</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Setting structural 3-ply laminated columns past the regional frost line with mixed base collars.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">03</div>
+                    <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Truss Framework</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Lifting custom engineered, high wind-load roof systems safely anchored using direct heavy brackets.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">04</div>
+                    <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Trim & Envelope</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Installing architectural siding arrays, proper ridge venting layouts, and commercial door assemblies.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: ESTIMATOR -->
+        <section id="configurator" class="tab-content">
+            <div class="config-container">
+                <div class="config-panel">
+                    <h2 style="margin-bottom: 0.5rem;">Select Build Type</h2>
+                    <p style="color: var(--text-light); margin-bottom: 1.5rem; font-size: 0.9rem;">Adjust layout options to calculate structural crew and material contract metrics.</p>
+                    
+                    <div class="config-group">
+                        <label>Structural Building Services</label>
+                        <select class="select-input" id="struct-type" onchange="updateConfiguratorOptions()">
+                            <option value="barn">Substantial Post-Frame Barn</option>
+                            <option value="gazebo">Architectural Open-Air Gazebo</option>
+                        </select>
+                    </div>
+
+                    <div class="config-group">
+                        <label>Footprint Allocations</label>
+                        <select class="select-input" id="struct-size" onchange="updateConfigurator()">
+                            <!-- Generated via State Engine -->
+                        </select>
+                    </div>
+
+                    <div class="config-group" id="height-container">
+                        <label>Interior Eave Ceiling Clearance</label>
+                        <select class="select-input" id="struct-height" onchange="updateConfigurator()">
+                            <option value="10">10 Foot Eave Clearance</option>
+                            <option value="12" selected>12 Foot Eave Clearance</option>
+                            <option value="14">14 Foot Eave Clearance</option>
+                            <option value="16">16 Foot Eave Clearance</option>
+                        </select>
+                    </div>
+
+                    <div class="config-group">
+                        <label>Siding Profile Material</label>
+                        <select class="select-input" id="siding-profile" onchange="updateConfigurator()">
+                            <option value="steel">29-Gauge Ribbed Steel Panels</option>
+                            <option value="lap">Premium Cedar Horizontal Lap Board</option>
+                            <option value="board">Traditional Board & Batten Timber</option>
+                        </select>
+                    </div>
+
+                    <div class="config-group">
+                        <label>Wall Panel Siding Tones</label>
+                        <div class="swatch-grid" id="wall-swatches"></div>
+                    </div>
+
+                    <div class="config-group">
+                        <label>Roof Panel Sheeting Tones</label>
+                        <div class="swatch-grid" id="roof-swatches"></div>
+                    </div>
+
+                    <div class="config-group">
+                        <label>Contract Add-ons & Turn-key Additions</label>
+                        <div class="checkbox-tile-group" id="upgrades-container"></div>
+                    </div>
+                </div>
+
+                <div class="config-preview-panel">
+                    <div class="preview-canvas-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
