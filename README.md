@@ -3,21 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Next-Gen Pole Barn Configurator</title>
-    <!-- Tailwind CSS with modern UI variables -->
+    <title>Ironclad Barns Pro Configurator</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- FontAwesome for flashy icons -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @keyframes pulse-fast { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .live-glow { animation: pulse-fast 1.5s infinite; }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0b0f19; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #334155; }
     </style>
 </head>
-<body class="bg-slate-950 text-white font-sans selection:bg-amber-500 selection:text-slate-900">
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-slate-800 selection:text-white">
 
+    <!-- Premium Editorial Top Banner (Replaced Corny Countdown) -->
+    <div class="bg-slate-900 border-b border-slate-800 text-center py-2.5 px-4 text-[11px] font-medium tracking-wider text-slate-400 flex items-center justify-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+        <span>Current Pricing reflect Q3 engineered lumber indexes for regional delivery grids.</span>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 py-4 px-6 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="bg-slate-900 border border-slate-800 p-2 rounded-xl text-slate-200">
+                <i class="fa-solid fa-compass-drafting text-sm"></i>
+            </div>
+            <span class="text-md font-bold tracking-tight text-white">IRONCLAD <span class="text-slate-400 font-normal">STUDIO</span></span>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="text-xs text-slate-500 font-mono">v2.4.1 // Stable Build</span>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-4 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Column: Image Canvas & Live Material List -->
+        <div class="lg:col-span-7 space-y-6">
+            <div class="bg-slate-900/40 border border-slate-900 rounded-2xl p-5 shadow-2xl relative overflow-hidden backdrop-blur-sm">
+                
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <span class="text-[10px] font-mono tracking-widest text-slate-500 uppercase">3D Perspective Space</span>
+                        <h2 class="text-lg font-bold tracking-tight text-white" id="visualizerTitle">Suburban Workshop Setup</h2>
+                    </div>
+                    <div class="text-[11px] font-mono text-slate-400 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Verified Engineering
+                    </div>
+                </div>
+                
+                <!-- Main Display Render -->
+                <div class="bg-slate-950 rounded-xl border border-slate-900 overflow-hidden relative min-h-[350px] lg:min-h-[400px] flex items-center justify-center">
+                    <img id="mainBarnVisual" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" class="w-full h-full min-h-[350px] lg:min-h-[400px] object-cover transition-all duration-500 filter brightness-95" alt="Post Frame Structure Profile">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                    
+                    <!-- Clean Architectural Spec Badge -->
+                    <div class="absolute bottom-4 left-4 bg-slate-900/90 backdrop-blur-md border border-slate-800 px-3.5 py-2.5 rounded-lg text-xs space-y-1 shadow-xl">
+                        <p class="text-[10px] text-slate-500 font-mono uppercase tracking-wider">Active Workspace footprint</p>
+                        <p class="font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-expand text-slate-400 text-xs"></i> <span id="overlayDimensions">30' x 40' Timber Frame</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Clean Pricing Summary Area -->
+                <div class="mt-4 p-4 bg-slate-950/60 rounded-xl border border-slate-900 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <p class="text-[10px] text-slate-500 font-mono uppercase tracking-wider">Estimated Pre-Engineered Kit Total</p>
+                        <div class="flex items-baseline gap-2 mt-0.5">
+                            <span class="text-2xl font-bold tracking-tight text-white" id="priceDisplay">$12,400</span>
+                            <span class="text-xs font-mono text-slate-500">MSRP Base USD</span>
+                        </div>
+                    </div>
+                    <div class="text-right text-xs text-slate-400 max-w-xs sm:text-right text-left">
+                        <p class="font-medium text-slate-300">FOB Manufacturing Hub Pricing</p>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Includes full framing blueprints, trim matrices, and fastener schedules.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW FEATURE: Live Dynamic Material Manifest Sheet -->
+            <div class="bg-slate-900/20 border border-slate-900 rounded-2xl p-5 space-y-3">
+                <h4 class="text-xs font-mono uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-slate-500"></i> Calculated Structural Manifest
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                    <div class="bg-slate-900/40 border border-slate-900 p-3 rounded-xl flex justify-between items-center">
+                        <span class="text-slate-500">Main Framing Post Profiles</span>
+                        <span class="font-mono font-bold text-slate-300" id="manifestPosts">3-Ply 2x6 Laminated</span>
+                    </div>
+                    <div class="bg-slate-900/40 border border-slate-900 p-3 rounded-xl flex justify-between items-center">
+                        <span class="text-slate-500">Truss Configuration</span>
+                        <span class="font-mono font-bold text-slate-300" id="manifestTrusses">4/12 Pitch Steel</span>
+                    </div>
+                    <div class="bg-slate-900/40 border border-slate-900 p-3 rounded-xl flex justify-between items-center">
+                        <span class="text-slate-500">Eave Overhang System</span>
+                        <span class="font-mono font-bold text-slate-300" id="manifestOverhang">Flush Edge</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Professional Architectural Control Board -->
+        <div class="lg:col-span-5 space-y-4">
+            
+            <div class="grid grid-cols-2 gap-2 bg-slate-900/80 p-1 rounded-xl border border-slate-800">
+                <button onclick="switchTab('design')" id="tab-design" class="w-full py-2.5 text-xs font-semibold tracking-wider uppercase rounded-lg bg-slate-800 border border-slate-700 text-white shadow-md transition-all">
+                    Structural Options
+                </button>
+                <button onclick="switchTab('quote')" id="tab-quote" class="w-full py-2.5 text-xs font-semibold tracking-wider uppercase rounded-lg text-slate-500 hover:text-slate-300 transition-all">
+                    Request Engineering Quote
+                </button>
+            </div>
+
+            <!-- Option Interface Panel -->
+            <div id="panel-design" class="bg-slate-900/30 border border-slate-900 p-6 rounded-2xl space-y-6 overflow-y-auto max-h-[75vh] custom-scrollbar">
+                
+                <!-- Structural Footprint Style -->
+                <div>
+                    <label class="block text-[11px] font-mono uppercase tracking-widest text-slate-500 mb-2.5">1. Architectural Profile</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div onclick="selectModel('workshop', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80', this)" class="model-card border border-slate-700 bg-slate-900/60 p-3 rounded-xl cursor-pointer hover:border-slate-500 transition-all">
+                            <p class="text-xs font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-warehouse text-amber-500 text-xs"></i> Suburban Shop
+                            </p>
+                        </div>
+                        <div onclick="selectModel('ag', 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80', this)" class="model-card border border-slate-900 bg-slate-900/60 p-3 rounded-xl cursor-pointer hover:border-slate-500 transition-all">
+                            <p class="text-xs font-bold text-slate-400 flex items-center gap-2">
+                                <i class="fa-solid fa-tractor text-xs"></i> Agricultural Storage
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Envelope Footprint Dimensions -->
+                <div>
+                    <label class="block text-[11px] font-mono uppercase tracking-widest text-slate-500 mb-2.5 flex justify-between">
+                        <span>2. Outer Dimensions</span>
+                        <span class="text-slate-400 font-mono" id="sqftDisplay">1200 Sq Ft</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="relative">
+                            <select id="barnWidth" onchange="updateConfig()" class="w-full appearance-none bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs font-medium text-slate-200 focus:outline-none focus:border-slate-600 cursor-pointer">
+                                <option value="24">24' Width Grid</option>
+                                <option value="30" selected>30' Width Grid</option>
+                                <option value="40">40' Width Grid</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 text-[10px] pointer-events-none"></i>
+                        </div>
+                        <div class="relative">
+                            <select id="barnLength" onchange="updateConfig()" class="w-full appearance-none bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs font-medium text-slate-200 focus:outline-none focus:border-slate-600 cursor-pointer">
+                                <option value="30">30' Length Footprint</option>
+                                <option value="40" selected>40' Length Footprint</option>
+                                <option value="60">60' Length Footprint</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 text-[10px] pointer-events-none"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW FEATURE: Engineered Roof Pitch Options -->
+                <div>
+                    <label class="block text-[11px] font-mono uppercase tracking-widest text-slate-500 mb-2.5">3. Engineered Truss Roof Pitch</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <label class="flex items-center justify-center py-2.5 bg-slate-950 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer text-xs font-mono text-slate-300">
+                            <input type="radio" name="roofPitch" value="3/12" onchange="updateConfig()" class="sr-only peer">
+                            <span class="peer-checked:text-amber-500 peer-checked:font-bold">3/12 Low</span>
+                        </label>
+                        <label class="flex items-center justify-center py-2.5 bg-slate-950 rounded-xl border border-slate-700 hover:border-slate-700 cursor-pointer text-xs font-mono text-slate-300">
+                            <input type="radio" name="roofPitch" value="4/12" checked onchange="updateConfig()" class="sr-only peer">
+                            <span class="peer-checked:text-amber-500 peer-checked:font-bold">4/12 Std</span>
+                        </label>
+                        <label class="flex items-center justify-center py-2.5 bg-slate-950 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer text-xs font-mono text-slate-300">
+                            <input type="radio" name="roofPitch" value="6/12" onchange="updateConfig()" class="sr-only peer">
+                            <span class="peer-checked:text-amber-500 peer-checked:font-bold">6/12 High</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- NEW FEATURE: Side Wall Eave Overhang Packages -->
+                <div>
+                    <label class="block text-[11px] font-mono uppercase tracking-widest text-slate-500 mb-2.5">4. Box Eave Overhang Profiles</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="flex items-center gap-3 bg-slate-950 p-3 rounded-xl border border-slate-700 hover:border-slate-600 cursor-pointer">
+                            <input type="radio" name="eaveOverhang" value="Flush" checked onchange="updateConfig()" class="w-3.5 h-3.5 text-slate-700 accent-amber-500">
+                            <div>
+                                <p class="text-xs font-bold text-slate-300">Standard Flush</p>
+                                <p class="text-[10px] text-slate-500">Clean geometric roof edge</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 bg-slate-950 p-3 rounded-xl border border-slate-800 hover:border-slate-600 cursor-pointer">
+                            <input type="radio" name="eaveOverhang" value="12-Inch" onchange="updateConfig()" class="w-3.5 h-3.5 text-slate-700 accent-amber-500">
+                            <div>
+                                <p class="text-xs font-bold text-slate-300">12" Box Eaves</p>
+                                <p class="text-[10px] text-slate-500">Enhanced weather run-off</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Premium Texture Siding Panels -->
+                <div>
+                    <label class="block text-[11px] font-mono uppercase tracking-widest text-slate-500 mb-2.5">5. Outer Wall Envelope Steel Texture</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div onclick="selectSiding('#991b1b', this)" class="siding-card border border-slate-700 bg-slate-950 rounded-xl overflow-hidden cursor-pointer shadow-md group relative h-16">
+                            <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=250&q=80" class="absolute inset-0 w-full h-full object-cover opacity-20 transition-all" alt="Crimson Texture">
+                            <div class="absolute inset-0 bg-slate-950/40 p-3 flex items-center justify-between">
+                                <span class="text-xs font-bold text-white">Crimson Red Steel</span>
+                                <span class="text-[9px] font-mono bg-slate-900 px-1.5 py-0.5 rounded text-slate-400">29-Ga.</span>
+                            </div>
+                        </div>
+                        <div onclick="selectSiding('#1e293b', this)" class="siding-card border border-slate-900 bg-slate-950 rounded-xl overflow-hidden cursor-pointer shadow-md group relative h-16">
+                            <img src="https://images.unsplash.com/photo-1531834685988-c388d2c019ec?auto=format&fit=crop&w=250&q=80" class="absolute inset-0 w-full h-full object-cover opacity-20 transition-all" alt="Slate Texture">
+                            <div class="absolute inset-0 bg-slate-950/40 p-3 flex items-center justify-between">
+                                <span class="text-xs font-bold text-slate-400">Charcoal Slate</span>
+                                <span class="text-[9px] font-mono bg-slate-900 px-1.5 py-0.5 rounded text-slate-500">29-Ga.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Window Assemblies and Roll-Up Access Panels -->
+                <div>
+                    <label class="block text-[11px] font-mono uppercase tracking-widest text-slate-500 mb-2.5">6. Structural Openings</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer transition-all">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="addWindows" onchange="updateConfig()" class="w-3.5 h-3.5 accent-slate-400">
+                                <span class="text-xs text-slate-300">Window Grid (x3)</span>
+                            </div>
+                            <span class="text-[10px] font-mono text-slate-500">+$1,150</span>
+                        </label>
+                        <label class="flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-700 hover:border-slate-700 cursor-pointer transition-all">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="addDoor" checked onchange="updateConfig()" class="w-3.5 h-3.5 accent-slate-400">
+                                <span class="text-xs text-slate-300">12x12 Sectional</span>
+                            </div>
+                            <span class="text-[10px] font-mono text-slate-500">+$1,200</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button onclick="switchTab('quote')" class="w-full bg-slate-100 hover:bg-white text-slate-950 font-bold text-xs uppercase tracking-wider py-3.5 rounded-xl transition-all shadow-xl">
+                    Proceed to Engineering Analysis
+                </button>
+            </div>
+
+            <!-- Panel 2: Polished Professional Request Board (No High-Pressure Phrasing) -->
+            <div id="panel-quote" class="bg-slate-900/30 border border-slate-900 p-6 rounded-2xl space-y-4 hidden">
+                <div class="pb-2 border-b border-slate-900">
+                    <h3 class="text-md font-bold tracking-tight text-white">Request Official Bill of Materials</h3>
+                    <p class="text-xs text-slate-400 mt-1">Submit your specification data layer below. An engineering representative will review structural snow/wind loading metrics for your municipality.</p>
+                </div>
+
+                <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-[10px] font-mono uppercase tracking-wider text-slate-500 mb-1">Point of Contact Name</label>
+                        <input type="text" required placeholder="Full Structural Owner Name" class="w-full bg-slate-950 border border-slate-900 rounded-xl px-3 py-2.5 text-xs text-white placeholder-slate-700 focus:outline-none focus:borde
     <!-- Flashy Urgency Banner -->
     <div class="bg-gradient-to-r from-amber-600 via-orange-500 to-yellow-500 text-slate-950 text-center py-2 px-4 text-xs font-black tracking-widest uppercase shadow-lg flex items-center justify-center gap-2">
         <i class="fa-solid fa-fire text-sm animate-bounce"></i>
